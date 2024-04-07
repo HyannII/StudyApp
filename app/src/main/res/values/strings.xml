@@ -1,3 +1,151 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="gioi_thieu_hoc_phan">Giới thiệu học phần</string>
+
+    <string-array name="course_name">
+        <item>Chapter 1: Preamble</item>
+        <item>Chapter 2: Classical encryption</item>
+        <item>Chapter 3: Number theory</item>
+        <item>Chapter 4: Modern encryption</item>
+        <item>Chapter 5: Public key encryption</item>
+        <item>Chapter 6: Message authentication</item>
+        <item>Chapter 7: Some network security applications</item>
+        <item>Chapter 8: System security</item>
+    </string-array>
+
+    <string-array name="question">
+        <item>Cho mã Ceasar: C = E(p) = (p + k) mod (26); với k = 3, bạn mã hoá từ “Anh”</item>
+        <item>BLK</item>
+        <item>DQK</item>
+        <item>CQH</item>
+        <item>ALH</item>
+        <item>DQK</item>
+
+        <item>Mã Vigenere là mã</item>
+        <item>phép thế trên một bảng chữ</item>
+        <item>phép thế trên nhiều bảng chữ</item>
+        <item>phép dịch chuyển, tức là đảo chữ trên bản rõ để nhận được bản mã</item>
+        <item>phép thế kết hợp với dịch chuyển</item>
+        <item>phép thế trên nhiều bảng chữ</item>
+
+        <item>Trước khi mã Playfair không cần thực hiện việc gì</item>
+        <item>Chọn một từ khoá chứa mỗi chữ nhiều nhất 1 lần</item>
+        <item>Viết từ khoá theo hàng của một ma trận 5 x 5 và bổ sung các chữ khác</item>
+        <item>Tách bản rõ thành các bộ 5 chữ để mã cùng một lúc.</item>
+        <item>chia bản rõ thành từng cặp chữ, nếu cặp chữ như nhau thì chèn các chữ đặc biệt khác</item>
+        <item>Chọn một từ khoá chứa mỗi chữ nhiều nhất 1 lần</item>
+
+        <item>Trong sơ đồ sinh khoá của DES từ khoá chính 56 bit sinh</item>
+        <item>8 khoá con mỗi khoá 48 bit, mỗi khoá dùng cho 1 vòng</item>
+        <item>16 khoá con mỗi khoá 32 bit, mỗi khoá dùng cho 1 vòng</item>
+        <item>12 khoá con mỗi khoá 32 bit, mỗi khoá dùng cho 1 vòng</item>
+        <item>16 khoá con mỗi khoá 48 bit, mỗi khoá dùng cho 1 vòng</item>
+        <item>16 khoá con mỗi khoá 48 bit, mỗi khoá dùng cho 1 vòng</item>
+
+        <item>Số ngẫu nhiên được ứng dụng nhiều, điều gì sau đây là sai:</item>
+        <item>Nhãn thời gian cho bản tin</item>
+        <item>Tạo khoá phiên dùng chung giữa hai người sử dụng</item>
+        <item>Sinh khoá công khai</item>
+        <item>Khoá dòng cho bộ đệm dùng nhiều lần</item>
+        <item>Sinh khoá công khai</item>
+
+        <item>Tìm khẳng định sai về số nguyên tố:</item>
+        <item>Số nguyên tố lớn hơn 2 là số lẻ</item>
+        <item>Số nguyên tố chỉ chia hết cho chính nó và 1</item>
+        <item>Số 2 là số chẵn duy nhất là số nguyên tố</item>
+        <item>Mọi số nguyên tố đều bị chặn trên</item>
+        <item>Mọi số nguyên tố đều bị chặn trên</item>
+
+        <item>Tìm ra kết luận sai trong các khẳng định sau</item>
+        <item>2^6 mod 12 = 1</item>
+        <item>4^12 mod 21 = 1</item>
+        <item>8^12 mod 21 = 1</item>
+        <item>5^6 mod 12 = 1</item>
+        <item>4^12 mod 21 = 1</item>
+
+        <item>Tìm ra kết luận đúng trong các khẳng định sau</item>
+        <item>Căn nguyên phải là số nguyên tố</item>
+        <item>Căn nguyên của một số không cần phải là số nguyên tố cùng nhau với số đã cho</item>
+        <item>Căn nguyên của một số phải nhỏ hơn số đã cho</item>
+        <item>Luỹ thừa căn nguyên của một số sẽ tạo nên tập các số nguyên tố cùng nhau với số đó.</item>
+        <item>Căn nguyên của một số không cần phải là số nguyên tố cùng nhau với số đã cho</item>
+
+        <item>Xét mã RSA, tìm kết luận sai trong các khẳng định sau</item>
+        <item>Độ an toàn dựa vào độ khó của bài toán phân tích 1 số ra thừa số</item>
+        <item>Tính an toàn dựa vào độ khó bài toán nhân hai số nguyên tố rất lớn</item>
+        <item>Dựa trên lũy thừa trường hữu hạn các số nguyên modulo nguyên tố</item>
+        <item>Sử dụng các số rất lớn 1024 bit</item>
+        <item>Dựa trên lũy thừa trường hữu hạn các số nguyên modulo nguyên tố</item>
+
+        <item>Chủ quyền khoá công khai PKC dùng để (chọn kết luận đúng)</item>
+        <item>Dùng khoá riêng của mình xác thực khoá công khai và danh tính của người sử dụng</item>
+        <item>Trao đổi khoá mật dùng chung giữa hai người sử dụng</item>
+        <item>Cung cấp khoá công khai của đối tác cho 2 người sử dụng</item>
+        <item>Cung cấp khoá công khai để người sử dụng tính khoá riêng</item>
+        <item>Dùng khoá riêng của mình xác thực khoá công khai và danh tính của người sử dụng</item>
+
+        <item>Chọn kết luận đúng: xác nhận khoá công khai của CA dùng để</item>
+        <item>trao đổi khoá mật dùng chung giữa hai người sử dụng</item>
+        <item>người sử dụng gửi cho các đối tác tin tưởng vào danh tính của mình</item>
+        <item>Cung cấp khoá công khai và khoá riêng cho người sử dụng</item>
+        <item>Cung cấp khoá công khai cho người sử dụng</item>
+        <item>người sử dụng gửi cho các đối tác tin tưởng vào danh tính của mình</item>
+
+        <item>Sự an toàn của trao đổi khoá Diffie Hellman dựa trên</item>
+        <item>việc trao đổi trên kênh riêng của 2 người sử dụng</item>
+        <item>thông qua bên đối tác thứ ba tin cậy</item>
+        <item>độ khó của bài toán logarit rời rạc</item>
+        <item>độ mật của khoá dùng chung cũ</item>
+        <item>độ khó của bài toán logarit rời rạc</item>
+
+        <item>Tìm khẳng định đúng trong các câu sau về mã xác thực bản tin</item>
+        <item>Mã xác thực có thể giải mã để nhận lại bản tin</item>
+        <item>Mã xác thực phụ thuộc vào bản tin và khoá</item>
+        <item>Mã xác thực có vai trò như chữ ký điện tử</item>
+        <item>Bên nhận không biết thuật toán mã xác thực và khoá</item>
+        <item>Mã xác thực có vai trò như chữ ký điện tử</item>
+
+        <item>Cho khẳng định đúng, MD5 là</item>
+        <item>Mã xác thực</item>
+        <item>Hàm Hash</item>
+        <item>Mã công khai</item>
+        <item>Chữ ký điện tử</item>
+        <item>Hàm Hash</item>
+
+        <item>Tìm khẳng định sai về chữ ký điện tử trong các câu sau</item>
+        <item>Chữ ký điện tử phụ thuộc bản tin và người ký</item>
+        <item>Chữ ký điện tử xác nhận người gửi và nội dung gửi</item>
+        <item>Dùng chữ ký điện tử chống từ chối người gửi</item>
+        <item>Người nhận có thể tạo ra chữ ký điện tử của người gửi trên bản tin để so sánh</item>
+        <item>Người nhận có thể tạo ra chữ ký điện tử của người gửi trên bản tin để so sánh</item>
+
+        <item>Yêu cầu của thanh toán điện tử an toàn, khẳng định nào sai</item>
+        <item>Thông tin mua hàng và mã thẻ người mua chuyển cho người bán</item>
+        <item>Xác thực thẻ tín dụng người mua và chuyển tiền</item>
+        <item>Xác thực người bán và xác thực việc chấp nhận bán</item>
+        <item>Xác thực yêu cầu mua và chữ ký người mua</item>
+        <item>Xác thực yêu cầu mua và chữ ký người mua</item>
+
+        <item>Nhận định nào sai về bảo mật dữ liệu:</item>
+        <item>Bảo mật dữ liệu là dấu thông tin hoặc nguồn gốc để cấm khai thác không bản quyền</item>
+        <item>Bảo mật kết nối: bảo vệ dữ liệu của người sử dụng khi kết nối</item>
+        <item>Nguyên tắc “cần mới được biết”, tức là mọi người sử dụng trong hệ thống chỉ được biết những gì cho phép</item>
+        <item>Bảo mật sẽ đảm bảo hoàn toàn xác thực của người gửi</item>
+        <item>Bảo mật sẽ đảm bảo hoàn toàn xác thực của người gửi</item>
+
+        <item>Nhận định nào sai về cơ chế bảo đảm tính toàn vẹn:</item>
+        <item>Cơ chế cấm mọi cách không bản quyền thay đổi nội dung</item>
+        <item>Cơ chế phát hiện và báo cáo các vi phạm tính toàn vẹn bằng cách phân tích dữ liệu và sự kiện</item>
+        <item>Dùng mã công khai để kiểm soát sự toàn vẹn</item>
+        <item>Dùng hàm hash làm dấu vân tay của bản tin</item>
+        <item>Dùng mã công khai để kiểm soát sự toàn vẹn</item>
+
+        <item>Nhận định nào sai về xác thực:</item>
+        <item>Xác thực là tin tưởng rằng đối tác trao đổi thông tin đúng là người xứng danh</item>
+        <item>Xác thực danh tính sử dụng khi kết nối logic để tin tưởng vào danh tính người kết nối</item>
+        <item>Xác thực bản tin gốc dùng khi truyền bản tin để tin tưởng dữ liệu nhận được đúng là gốc</item>
+        <item>Xác thực có thể dùng chống từ chối gốc.</item>
+        <item>Xác thực có thể dùng chống từ chối gốc.</item>
+
+    </string-array>
 </resources>
