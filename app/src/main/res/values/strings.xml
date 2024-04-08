@@ -13,6 +13,17 @@
         <item>Chapter 8: System security</item>
     </string-array>
 
+    <string-array name="video_id">
+        <item>t0jZDNKuUW</item>
+        <item>_0JYp7Z_JYU</item>
+        <item>s_NiFvwLThU</item>
+        <item>3mH6zaSjeGU</item>
+        <item>o-Y3IKVv-sM</item>
+        <item>GQdXl76dkmE</item>
+        <item>bJmVZk2VOn4</item>
+        <item>rVLqCCeVOuM</item>
+    </string-array>
+
     <string-array name="question">
         <item>Cho mã Ceasar: C = E(p) = (p + k) mod (26); với k = 3, bạn mã hoá từ “Anh”</item>
         <item>BLK</item>
