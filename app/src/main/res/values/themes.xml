@@ -4,7 +4,6 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 <!--        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>-->
-        <item name="android:windowNoMoveAnimation">true</item>
     </style>
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">24sp</item>
