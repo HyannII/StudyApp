@@ -41,6 +41,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         CourseModel courseModel = cours.get(position);
 
         holder.Tilte.setText(cours.get(position).getTitle());
+        holder.TitleContent.setText(cours.get(position).getTitleContent());
         holder.imageView.setImageResource(cours.get(position).getImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -68,12 +69,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     public static class  MyViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView Tilte;
+        TextView Tilte,TitleContent;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView= itemView.findViewById(R.id.imageView);
             Tilte = itemView.findViewById(R.id.txtDetail);
+            TitleContent = itemView.findViewById(R.id.txtContent);
         }
     }
 }

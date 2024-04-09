@@ -3,6 +3,14 @@
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+    </style>
+
+    <style name="ActivityAnim" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_open_enter</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_close_exit</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_close_exit</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

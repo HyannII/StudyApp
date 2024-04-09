@@ -1,16 +1,38 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Material</string>
     <string name="gioi_thieu_hoc_phan">Giới thiệu học phần</string>
 
     <string-array name="course_name">
-        <item>Chapter 1: Preamble</item>
-        <item>Chapter 2: Classical encryption</item>
-        <item>Chapter 3: Number theory</item>
-        <item>Chapter 4: Modern encryption</item>
-        <item>Chapter 5: Public key encryption</item>
-        <item>Chapter 6: Message authentication</item>
-        <item>Chapter 7: Some network security applications</item>
-        <item>Chapter 8: System security</item>
+        <item>Chapter 1:\nPreamble</item>
+        <item>Chapter 2:\nClassical encryption</item>
+        <item>Chapter 3:\nNumber theory</item>
+        <item>Chapter 4:\nModern encryption</item>
+        <item>Chapter 5:\nPublic key encryption</item>
+        <item>Chapter 6:\nMessage authentication</item>
+        <item>Chapter 7:\nSome network security applications</item>
+        <item>Chapter 8:\nSystem security</item>
+    </string-array>
+
+    <string-array name="chapter">
+        <item>Chapter 1</item>
+        <item>Chapter 2</item>
+        <item>Chapter 3</item>
+        <item>Chapter 4</item>
+        <item>Chapter 5</item>
+        <item>Chapter 6</item>
+        <item>Chapter 7</item>
+        <item>Chapter 8</item>
+    </string-array>
+
+    <string-array name="name_of_course">
+        <item>Preamble</item>
+        <item>Classical encryption</item>
+        <item>Number theory</item>
+        <item>Modern encryption</item>
+        <item>Public key encryption</item>
+        <item>Message authentication</item>
+        <item>Some network security applications</item>
+        <item>System security</item>
     </string-array>
 
     <string-array name="video_id">

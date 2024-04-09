@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".Activities.ListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".Activities.MainActivity"/>
         <activity
             android:name=".Activities.ReadDocumentActivity"
             android:exported="false" />

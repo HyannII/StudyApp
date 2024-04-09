@@ -2,10 +2,14 @@ package com.example.myapplication.Models;
 
 public class CourseModel {
     String Title;
+
+    String TitleContent;
     int Image;
 
-    public CourseModel(String title, int image) {
+
+    public CourseModel(String title, String titleContent, int image) {
         this.Title = title;
+        this.TitleContent = titleContent;
         this.Image = image;
     }
 
@@ -23,5 +27,13 @@ public class CourseModel {
 
     public void setImage(int image) {
         Image = image;
+    }
+
+    public String getTitleContent() {
+        return TitleContent;
+    }
+
+    public void setTitleContent(String titleContent) {
+        TitleContent = titleContent;
     }
 }
