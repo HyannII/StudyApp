@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="#46000000">
+    <ImageButton
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_centerInParent="true"
+        android:id="@+id/pausePlay"
+        android:scaleType="centerCrop"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/pause_circle"
+        app:tint="#fff">
+    </ImageButton>
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.customui.views.YouTubePlayerSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fontSize="12sp"
+        app:color="@android:color/holo_red_light"
+        android:layout_toStartOf="@id/toggleFullScreen"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/playerSeekBar">
+
+    </com.pierfrancescosoffritti.androidyoutubeplayer.core.customui.views.YouTubePlayerSeekBar>
+    <ImageButton
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/toggleFullScreen"
+        android:src="@drawable/fullscreen"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="#fff"
+        >
+
+
+    </ImageButton>
+</RelativeLayout>
+</RelativeLayout>
