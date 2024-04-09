@@ -31,8 +31,8 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.MainList);
 
         MaterialToolbar materialToolbar = findViewById(R.id.materialToolbar);
+        materialToolbar.setTitle(null);
         setSupportActionBar(materialToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         String action = intent.getStringExtra("action");
@@ -60,7 +60,8 @@ public class ListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==android.R.id.home){
-            finish();
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
