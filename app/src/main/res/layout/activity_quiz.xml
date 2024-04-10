@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Quiz"
+        android:text="Test"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
