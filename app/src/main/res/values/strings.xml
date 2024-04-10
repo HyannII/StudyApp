@@ -196,4 +196,7 @@
         <item>Xác thực có thể dùng chống từ chối gốc.</item>
 
     </string-array>
+
+    <string name="sign_up_text"> <![CDATA[Don\'t have an account? <u><font color="#0000FF">Sign up</font></u>]]> </string>
+
 </resources>
