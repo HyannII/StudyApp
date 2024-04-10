@@ -1,12 +1,16 @@
 package com.example.myapplication.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 import com.example.myapplication.Models.QuestionModel;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityQuizBinding;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,7 +39,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
 
-//        getSupportActionBar().hide();
+
 
         binding.btnNext.setEnabled(false);
         enableOption(true);
@@ -92,6 +97,10 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
         setContentView(binding.getRoot());
+
+        MaterialToolbar materialToolbar = findViewById(R.id.materialToolbar);
+        materialToolbar.setTitle("");
+        setSupportActionBar(materialToolbar);
     }
 
     private void disableButton() {
@@ -133,7 +142,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void playAnimation(View view, int value, String data) {
-        view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100)
+        view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(400).setStartDelay(100)
                 .setInterpolator(new DecelerateInterpolator()).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(@NonNull Animator animation) {
@@ -205,4 +214,32 @@ public class QuizActivity extends AppCompatActivity {
             correctOption.setBackgroundColor(0xFF00FF00);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            showExitConfirmationDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        showExitConfirmationDialog();
+    }
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            // Call super onBackPressed if the user confirms
+            QuizActivity.super.onBackPressed();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Dismiss the dialog
+            dialog.dismiss();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

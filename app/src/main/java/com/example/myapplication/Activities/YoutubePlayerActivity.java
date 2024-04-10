@@ -2,8 +2,10 @@ package com.example.myapplication.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -45,10 +47,21 @@ public class YoutubePlayerActivity extends AppCompatActivity {
 
             }
         });
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
     }
     private void loadNewVideo(String videoId) {
         if (youTubePlayer != null) {
             youTubePlayer.loadVideo(videoId, 0);
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
