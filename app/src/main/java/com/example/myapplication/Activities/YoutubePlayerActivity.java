@@ -24,8 +24,11 @@ public class YoutubePlayerActivity extends AppCompatActivity {
         int position = getIntent().getIntExtra("position", 0);
         String chapter = getIntent().getStringExtra("name");
 
+
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtubePlayer);
         TextView videoName = findViewById(R.id.videoChapterName);
+
+        videoName.setText(String.format("Video %s", chapter));
 
         getLifecycle().addObserver(youTubePlayerView);
 
@@ -37,7 +40,6 @@ public class YoutubePlayerActivity extends AppCompatActivity {
                 for (int i =0;i<8;i++){
                     if(position == i){
                         loadNewVideo(videoIds[i]);
-                        videoName.setText(String.format("Video %s", chapter));
                     }
                 }
 

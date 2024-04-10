@@ -51,11 +51,26 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
                     Intent intent = new Intent(context, ReadDocumentActivity.class);
                     intent.putExtra("name", courseModel.getTitle());
                     intent.putExtra("position", position);
+                    intent.putExtra("action","read");
                     context.startActivity(intent);
                 } else if (action.equals("video")){
                     Intent intent = new Intent(context, YoutubePlayerActivity.class);
                     intent.putExtra("name", courseModel.getTitle());
                     intent.putExtra("position", position);
+                    context.startActivity(intent);
+                } else if (action.equals("exercise")) {
+                    Intent intent = new Intent(context, ReadDocumentActivity.class);
+                    intent.putExtra("name", courseModel.getTitle());
+                    intent.putExtra("content",courseModel.getTitleContent());
+                    intent.putExtra("position", position);
+                    intent.putExtra("action","exercise");
+                    context.startActivity(intent);
+                }else if (action.equals("introduction")) {
+                    Intent intent = new Intent(context, ReadDocumentActivity.class);
+                    intent.putExtra("name", courseModel.getTitle());
+                    intent.putExtra("content", courseModel.getTitleContent());
+                    intent.putExtra("position", position);
+                    intent.putExtra("action", "introduction");
                     context.startActivity(intent);
                 }
             }

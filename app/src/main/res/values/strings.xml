@@ -35,8 +35,23 @@
         <item>System security</item>
     </string-array>
 
+    <string-array name="name_of_exercise">
+        <item>Classical encryption</item>
+        <item>Modulo</item>
+        <item>DES</item>
+        <item>AES</item>
+        <item>RSA-DH-ElGamma</item>
+    </string-array>
+
+    <string-array name="name_of_introduction">
+        <item>Table of contents</item>
+        <item>Course script</item>
+        <item>Reference</item>
+        <item>Cyber ​​security terminology</item>
+    </string-array>
+
     <string-array name="video_id">
-        <item>t0jZDNKuUW</item>
+        <item>t0jZDNKuUWs</item>
         <item>_0JYp7Z_JYU</item>
         <item>s_NiFvwLThU</item>
         <item>3mH6zaSjeGU</item>

@@ -28,6 +28,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
         RecyclerView recyclerView = findViewById(R.id.MainList);
 
         MaterialToolbar materialToolbar = findViewById(R.id.materialToolbar);
@@ -45,6 +46,9 @@ public class ListActivity extends AppCompatActivity {
     private void setCourse(String action){
         String [] chapters = getResources().getStringArray(R.array.chapter);
         String [] title = getResources().getStringArray(R.array.name_of_course);
+        String [] exercises = getResources().getStringArray(R.array.name_of_exercise);
+        String [] introductions = getResources().getStringArray(R.array.name_of_introduction);
+
         if(action.equals("read")){
             for (int i = 0; i < chapters.length; i++) {
                 cours.add(new CourseModel(chapters[i], title[i], images[0]));
@@ -53,6 +57,14 @@ public class ListActivity extends AppCompatActivity {
         else if (action.equals("video")){
             for (int i = 0; i < chapters.length; i++) {
                 cours.add(new CourseModel(chapters[i], title[i], images[1]));
+            }
+        }else if (action.equals("exercise")){
+            for(int i = 0;i < exercises.length; i++){
+                cours.add(new CourseModel("Exercise "+(i+1),exercises[i],images[0]));
+            }
+        }else if (action.equals("introduction")){
+            for(int i = 0;i < introductions.length; i++){
+                cours.add(new CourseModel("Introduction "+(i+1),introductions[i],images[0]));
             }
         }
     }

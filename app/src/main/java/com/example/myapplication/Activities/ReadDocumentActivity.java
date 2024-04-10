@@ -22,14 +22,24 @@ public class ReadDocumentActivity extends AppCompatActivity {
         chapterName = findViewById(R.id.chapterName);
 
         int position = getIntent().getIntExtra("position", 0);
-        String chapter = getIntent().getStringExtra("name");
+        String name = getIntent().getStringExtra("name");
+        String content = getIntent().getStringExtra("content");
+        String action = getIntent().getStringExtra("action");
 
-        for (int i =0;i<8;i++){
-            if(position == i){
-                pdfView.fromAsset("Chuong"+(i+1)+".pdf").load();
-                chapterName.setText(chapter);
+
+        if(action.equals("read")){
+            for (int i =0;i<8;i++){
+                if(position == i){
+                    pdfView.fromAsset("Chuong"+(i+1)+".pdf").load();
+                    chapterName.setText(name);
+                }
             }
+        }else if (action.equals("exercise")){
+            pdfView.fromAsset(content + " exercise.pdf").load();
+            chapterName.setText(content);
+        }else if (action.equals("introduction")){
+            pdfView.fromAsset(content + ".pdf").load();
+            chapterName.setText(content);
         }
-
     }
 }

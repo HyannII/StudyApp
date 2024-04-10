@@ -172,38 +172,40 @@
                     </TextView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/exerciseBtn"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="12dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
                 android:layout_row="1"
+                android:layout_rowWeight="1"
                 android:layout_column="0"
+                android:layout_columnWeight="1"
                 android:layout_margin="15dp"
                 app:cardBackgroundColor="#d0d4ff"
-                >
+                app:cardCornerRadius="15dp"
+                app:cardElevation="12dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/write"
                         android:layout_gravity="center_horizontal"
-                        >
-                    </ImageView>
+                        android:src="@drawable/write"></ImageView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Exercise"
                         android:layout_gravity="center_horizontal"
+                        android:text="Exercise"
+                        android:textColor="#2e3d6d"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#2e3d6d">
+                        android:textStyle="bold">
 
                     </TextView>
                 </LinearLayout>

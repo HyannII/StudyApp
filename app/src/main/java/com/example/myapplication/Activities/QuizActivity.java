@@ -17,6 +17,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityQuizBinding;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -24,21 +25,35 @@ public class QuizActivity extends AppCompatActivity {
     private int count = 0;
     private int position = 0;
     private int score = 0;
+    private int minutes,seconds;
+    private String timeLeftFormatted;
     CountDownTimer timer;
     ActivityQuizBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
 //        getSupportActionBar().hide();
 
-        String [] questionAndAnswers = getResources().getStringArray(R.array.question);
+        binding.btnNext.setEnabled(false);
+        enableOption(true);
+        resetTimer();
+        timer.start();
 
-        for (int i = 0;i<questionAndAnswers.length;i+=6) {
-            listQuestion.add(new QuestionModel(questionAndAnswers[i], questionAndAnswers[i+1],
-                    questionAndAnswers[i+2],questionAndAnswers[i+3],questionAndAnswers[i+4],questionAndAnswers[i+5]));
+        String [] questionAndAnswers = getResources().getStringArray(R.array.question);
+        ArrayList<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < questionAndAnswers.length; i+=6) {
+            indices.add(i);
+        }
+
+        Random random = new Random();
+        while (listQuestion.size() < 5 && !indices.isEmpty()) {
+            int randomIndex = random.nextInt(indices.size());
+            int selectedIndex = indices.get(randomIndex);
+            listQuestion.add(new QuestionModel(questionAndAnswers[selectedIndex], questionAndAnswers[selectedIndex+1],
+                    questionAndAnswers[selectedIndex+2],questionAndAnswers[selectedIndex+3],questionAndAnswers[selectedIndex+4],questionAndAnswers[selectedIndex+5]));
+            indices.remove(randomIndex);
         }
 
         for (int i=0;i<4;i++){
@@ -46,6 +61,7 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     checkAnswer((Button) view);
+                    disableButton();
                 }
             });
         }
@@ -64,6 +80,7 @@ public class QuizActivity extends AppCompatActivity {
                     Intent intent = new Intent(QuizActivity.this,ScoreActivity.class);
                     intent.putExtra("score",score);
                     intent.putExtra("total",listQuestion.size());
+                    intent.putExtra("time",timeLeftFormatted);
                     startActivity(intent);
                     finish();
                     return;
@@ -74,6 +91,45 @@ public class QuizActivity extends AppCompatActivity {
                 playAnimation(binding.question,0,listQuestion.get(position).getQuestion());
             }
         });
+        setContentView(binding.getRoot());
+    }
+
+    private void disableButton() {
+        binding.option1.setEnabled(false);
+        binding.option2.setEnabled(false);
+        binding.option3.setEnabled(false);
+        binding.option4.setEnabled(false);
+    }
+
+    private void resetTimer() {
+        timer = new CountDownTimer(60000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                minutes = (int) (millisUntilFinished / 1000) / 60;
+                seconds = (int) (millisUntilFinished / 1000) % 60;
+
+                timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+                binding.timer.setText(timeLeftFormatted);
+            }
+
+            @Override
+            public void onFinish() {
+                binding.timer.setText("00:00");
+                Intent intent = new Intent(QuizActivity.this,ScoreActivity.class);
+                intent.putExtra("score",score);
+                intent.putExtra("total",listQuestion.size());
+                intent.putExtra("time",timeLeftFormatted);
+                startActivity(intent);
+                finish();
+            }
+        };
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     private void playAnimation(View view, int value, String data) {
@@ -103,7 +159,7 @@ public class QuizActivity extends AppCompatActivity {
                         if(value == 0){
                             try{
                                 ((TextView)view).setText(data);
-                                binding.questionCount.setText(position+1+"/"+listQuestion.size());
+                                binding.questionCount.setText(position+1 +"/"+listQuestion.size());
                             }catch (Exception e){
                                 ((Button)view).setText(data);
                             }
@@ -130,7 +186,7 @@ public class QuizActivity extends AppCompatActivity {
             binding.optionContainer.getChildAt(i).setEnabled(enable);
 
             if(enable){
-                binding.optionContainer.getChildAt(i).setBackgroundColor(0xFF0000FF);
+                binding.optionContainer.getChildAt(i).setBackgroundColor(0xFF2195F2);
             }
         }
 

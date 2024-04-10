@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ImageButton drawerToggle;
-    private CardView readDocument, test, videoPlayer;
+    private CardView introduction, readDocument,exercise, test, videoPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,17 +25,35 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = findViewById(R.id.drawer_toggle);
+        introduction = findViewById(R.id.introductionBtn);
         readDocument = findViewById(R.id.readDocumentBtn);
+        exercise = findViewById(R.id.exerciseBtn);
         test = findViewById(R.id.testBtn);
         videoPlayer = findViewById(R.id.videoBtn);
 
         // Set click listener for drawer toggle button
         drawerToggle.setOnClickListener(v -> drawerLayout.open());
+        introduction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra("action", "introduction");
+                startActivity(intent);
+            }
+        });
         readDocument.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra("action", "read");
+                startActivity(intent);
+            }
+        });
+        exercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra("action", "exercise");
                 startActivity(intent);
             }
         });
