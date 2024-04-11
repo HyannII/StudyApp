@@ -11,27 +11,42 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Database.DatabaseHelper;
+import com.example.myapplication.Models.UserModel;
 import com.example.myapplication.R;
+import com.google.android.material.navigation.NavigationView;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ImageButton drawerToggle;
     private CardView introduction, readDocument,exercise, test, videoPlayer, profile;
-    private TextView userName;
+    private TextView userName, userNameNav, emailNav;
+    private ImageView avatar, avatarNav;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        databaseHelper = new DatabaseHelper(this);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = findViewById(R.id.drawer_toggle);
@@ -43,11 +58,38 @@ public class MainActivity extends AppCompatActivity {
         videoPlayer = findViewById(R.id.videoBtn);
         profile = findViewById(R.id.btnProfile);
 
+        NavigationView navigationView = drawerLayout.findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        Menu menu = navigationView.getMenu();
+        MenuItem navLogoutItem = menu.findItem(R.id.nav_logout);
+        MenuItem navProfileItem = menu.findItem(R.id.nav_profile);
+        MenuItem navTestResultsItem = menu.findItem(R.id.nav_test_results);
+        MenuItem navHome = menu.findItem(R.id.nav_home);
+
         userName = findViewById(R.id.txtUser);
+        userNameNav = headerView.findViewById(R.id.txtUsername);
+        emailNav = headerView.findViewById(R.id.txtEmail);
+        avatar = findViewById(R.id.userImg);
+        avatarNav = headerView.findViewById(R.id.userImg);
 
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String savedUsername = prefs.getString("username", null);
+
+        UserModel user = databaseHelper.getUser(savedUsername);
         userName.setText(savedUsername);
+        userNameNav.setText(savedUsername);
+        emailNav.setText(user.getEmail());
+
+        byte[] avatarBytes = user.getAvatar();
+        if (avatarBytes != null) {
+            InputStream inputStream = new ByteArrayInputStream(avatarBytes);
+            Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
+            avatar.setImageBitmap(avatarBitmap);
+            avatarNav.setImageBitmap(avatarBitmap);
+        }else{
+            avatar.setImageResource(R.drawable.account_person);
+            avatarNav.setImageResource(R.drawable.account_person);
+        }
 
 //        if(checkPermission() == false){
 //            requestPermission();
@@ -55,52 +97,63 @@ public class MainActivity extends AppCompatActivity {
 //        }
         // Set click listener for drawer toggle button
         drawerToggle.setOnClickListener(v -> drawerLayout.open());
-        introduction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("action", "introduction");
+        if (navLogoutItem != null) {
+            navLogoutItem.setOnMenuItemClickListener(item -> {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
-            }
-        });
-        readDocument.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("action", "read");
-                startActivity(intent);
-            }
-        });
-        exercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("action", "exercise");
-                startActivity(intent);
-            }
-        });
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-                startActivity(intent);
-            }
-        });
-        videoPlayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("action", "video");
-                startActivity(intent);
-            }
-        });
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                return true;
+            });
+        }
+        if (navProfileItem != null) {
+            navProfileItem.setOnMenuItemClickListener(item -> {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
-            }
+                return true;
+            });
+        }
+        if (navTestResultsItem != null) {
+            navTestResultsItem.setOnMenuItemClickListener(item -> {
+                Intent intent = new Intent(MainActivity.this, ResultListActivity.class);
+                startActivity(intent);
+                return true;
+            });
+        }
+        if (navHome != null) {
+            navHome.setOnMenuItemClickListener(item ->{
+                drawerLayout.close();
+                return true;
+            });
+        }
+
+        introduction.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            intent.putExtra("action", "introduction");
+            startActivity(intent);
         });
+        readDocument.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            intent.putExtra("action", "read");
+            startActivity(intent);
+        });
+        exercise.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            intent.putExtra("action", "exercise");
+            startActivity(intent);
+        });
+        test.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+            startActivity(intent);
+        });
+        videoPlayer.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            intent.putExtra("action", "video");
+            startActivity(intent);
+        });
+        profile.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
     }
 
 //    boolean checkPermission(){

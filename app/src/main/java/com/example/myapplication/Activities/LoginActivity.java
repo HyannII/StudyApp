@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
                     if(checkAccount){
                         Toast.makeText(LoginActivity.this,"Login Sucessfully",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(intent);
                         SharedPreferences.Editor editor = getSharedPreferences("MyPrefs", MODE_PRIVATE).edit();
                         editor.putString("username", username);
                         editor.apply();
+                        startActivity(intent);
                         finish();
                     }else{
                         Toast.makeText(LoginActivity.this,"Wrong username or password",Toast.LENGTH_SHORT).show();

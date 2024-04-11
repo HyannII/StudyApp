@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
             binding.profileImg.setImageBitmap(avatarBitmap);
         } else {
-            // Xử lý trường hợp avatar là null (ví dụ: hiển thị hình ảnh mặc định)
+            binding.profileImg.setImageResource(R.drawable.account_person);
             Toast.makeText(ProfileActivity.this, "No image", Toast.LENGTH_SHORT).show();
         }
 

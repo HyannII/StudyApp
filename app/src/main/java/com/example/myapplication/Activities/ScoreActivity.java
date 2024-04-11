@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.myapplication.Database.DatabaseHelper;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityScoreBinding;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -17,6 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 public class ScoreActivity extends AppCompatActivity {
 
     ActivityScoreBinding binding;
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
@@ -48,6 +50,13 @@ public class ScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        binding.btnShowList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScoreActivity.this, ResultListActivity.class);
+                startActivity(intent);
             }
         });
     }

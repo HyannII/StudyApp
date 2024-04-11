@@ -155,12 +155,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="108dp"
-                android:text="Quit"
                 android:backgroundTint="#6a73c3"
+                android:text="Quit"
                 app:layout_constraintBottom_toBottomOf="@+id/btnRestart"
                 app:layout_constraintStart_toEndOf="@+id/btnRestart"
                 app:layout_constraintTop_toTopOf="@+id/btnRestart"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btnShowList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="44dp"
+                android:text="Results"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnQuit"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/btnRestart" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

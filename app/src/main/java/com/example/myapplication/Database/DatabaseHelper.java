@@ -12,14 +12,25 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.Models.ResultModel;
 import com.example.myapplication.Models.UserModel;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "Signup.db";
     private static final String TABLE_NAME = "UserProfile";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
+    private static final String TABLE_RESULT = "Result";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_EXAMINEE = "examinee";
+    private static final String COLUMN_START_TIME = "startTime";
+    private static final String COLUMN_CORRECT_NUM = "correctNum";
+    private static final String COLUMN_WRONG_NUM = "wrongNum";
+    private static final String COLUMN_TIME_LEFT = "timeLeft";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,7 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableQuery = "CREATE TABLE " + TABLE_NAME + " (" +
+        // Tạo bảng UserProfile
+        String createUserProfileTableQuery = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_USERNAME + " TEXT PRIMARY KEY," +
                 COLUMN_PASSWORD + " TEXT," +
                 "fullname TEXT," +
@@ -36,8 +48,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "email TEXT," +
                 "phonenumber TEXT," +
                 "avatar BLOB)";
-        db.execSQL(createTableQuery);
+        db.execSQL(createUserProfileTableQuery);
+
+        // Tạo bảng Result
+        String createResultTableQuery = "CREATE TABLE " + TABLE_RESULT + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_EXAMINEE + " TEXT," +
+                COLUMN_START_TIME + " TEXT," +
+                COLUMN_CORRECT_NUM + " INTEGER," +
+                COLUMN_WRONG_NUM + " INTEGER," +
+                COLUMN_TIME_LEFT + " TEXT)";
+        db.execSQL(createResultTableQuery);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -115,4 +138,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return count > 0;
     }
+    public long addResult(String examinee, String startTime, int correctNum, int wrongNum, String timeLeft) {
+        // Lấy cơ sở dữ liệu trong chế độ ghi
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Tạo đối tượng ContentValues để lưu các giá trị của các trường
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXAMINEE, examinee);
+        values.put(COLUMN_START_TIME, startTime);
+        values.put(COLUMN_CORRECT_NUM, correctNum);
+        values.put(COLUMN_WRONG_NUM, wrongNum);
+        values.put(COLUMN_TIME_LEFT, timeLeft);
+
+        // Chèn hàng vào bảng Result
+        // Hàm insert() trả về ID của hàng mới được chèn, hoặc -1 nếu chèn thất bại
+        long resultId = db.insert(TABLE_RESULT, null, values);
+
+        // Đóng cơ sở dữ liệu
+        db.close();
+
+        // Trả về ID của hàng mới được chèn
+        return resultId;
+    }
+    public ArrayList<ResultModel> getAllResult() {
+        // Tạo danh sách để lưu trữ các đối tượng Result
+        ArrayList<ResultModel> resultList = new ArrayList<>();
+
+        // Lấy cơ sở dữ liệu trong chế độ đọc
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn tất cả các hàng trong bảng Result
+        String query = "SELECT * FROM " + TABLE_RESULT;
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Lặp qua các kết quả truy vấn
+        if (cursor.moveToFirst()) {
+            do {
+                // Lấy dữ liệu của một hàng từ cursor
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+                String examinee = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXAMINEE));
+                String startTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+                int correctNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CORRECT_NUM));
+                int wrongNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WRONG_NUM));
+                String timeLeft = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME_LEFT));
+
+                // Tạo đối tượng Result mới từ dữ liệu của hàng
+                ResultModel result = new ResultModel(id, examinee, startTime, correctNum, wrongNum, timeLeft);
+
+                // Thêm đối tượng Result vào danh sách
+                resultList.add(result);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return resultList;
+    }
+
 }
