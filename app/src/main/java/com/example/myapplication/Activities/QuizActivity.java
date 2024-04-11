@@ -195,7 +195,7 @@ public class QuizActivity extends AppCompatActivity {
             binding.optionContainer.getChildAt(i).setEnabled(enable);
 
             if(enable){
-                binding.optionContainer.getChildAt(i).setBackgroundColor(0xFF2195F2);
+                binding.optionContainer.getChildAt(i).setBackgroundColor(0xFF6A73C3);
             }
         }
 
@@ -229,7 +229,7 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to exit?");
+        builder.setMessage("Are you sure you want to quit?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
             // Call super onBackPressed if the user confirms
             QuizActivity.super.onBackPressed();

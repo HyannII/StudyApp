@@ -24,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2196F3">
+            android:background="@drawable/c_layout_gradient">
 
             <TextView
                 android:id="@+id/textView6"
@@ -145,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
                 android:layout_marginTop="32dp"
+                android:backgroundTint="#6a73c3"
                 android:text="Restart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTime" />
@@ -155,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="108dp"
                 android:text="Quit"
+                android:backgroundTint="#6a73c3"
                 app:layout_constraintBottom_toBottomOf="@+id/btnRestart"
                 app:layout_constraintStart_toEndOf="@+id/btnRestart"
                 app:layout_constraintTop_toTopOf="@+id/btnRestart"
@@ -168,7 +170,7 @@
         android:id="@+id/materialToolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/toolbar_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
