@@ -38,12 +38,13 @@ public class SignUpActivity extends AppCompatActivity {
                         Boolean checkUsername = databaseHelper.checkUser(username);
 
                         if(!checkUsername){
-                            Boolean insert = databaseHelper.addUser(username,password);
+                            Boolean insert = databaseHelper.addUser(username,password,"","","","","",null);
 
                             if (insert){
                                 Toast.makeText(SignUpActivity.this,"Signup Sucessfully",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                                 startActivity(intent);
+                                finish();
                             }else{
                                 Toast.makeText(SignUpActivity.this,"Signup Failed",Toast.LENGTH_LONG).show();
                             }

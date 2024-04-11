@@ -10,25 +10,28 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:id="@+id/userImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/profile">
 
     </ImageView>
+
     <TextView
+        android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Someone"
-        android:textSize="25sp"
         android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="someone@example.com"
+        android:layout_marginBottom="16dp"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="14sp" />
 
 </LinearLayout>
