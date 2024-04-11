@@ -20,8 +20,8 @@
 
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/settings"
-            android:title="Settings" />
+            android:icon="@drawable/fact_check"
+            android:title="Test result" />
     </group>
     <item
         android:title="">

@@ -178,6 +178,7 @@
         android:layout_marginTop="20dp"
         android:text="Username"
         android:textSize="20sp"
+        android:textColor="#3B608C"
         app:layout_constraintEnd_toEndOf="@+id/cardView2"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="@+id/cardView2"
