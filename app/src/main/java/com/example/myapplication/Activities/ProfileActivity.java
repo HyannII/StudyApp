@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,19 +13,23 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.myapplication.Database.DatabaseHelper;
 import com.example.myapplication.Models.UserModel;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityProfileBinding;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
@@ -49,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         UserModel user = databaseHelper.getUser(savedUsername);
 
         binding.txtFullnameProfile.setText(user.getFullname());
-        binding.txtBirthdayProfile.setText(user.getBirthday());
+        binding.birthdayPickerText.setText(user.getBirthday());
         binding.txtGenderProfile.setText(user.getGender());
         binding.txtEmailProfile.setText(user.getEmail());
         avatarBytes = user.getAvatar();
@@ -75,14 +80,45 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(iGallery, GALLERY_REQ_CODE);
             }
         });
+        binding.birthdayPickerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
 
+                // on below line we are getting
+                // our day, month and year.
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // on below line we are creating a variable for date picker dialog.
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        ProfileActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+                                binding.birthdayPickerText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        },
+                        // on below line we are passing year,
+                        // month and day for selected date in our date picker.
+                        year, month, day);
+                // at last we are calling show to
+                // display our date picker dialog.
+                datePickerDialog.show();
+            }
+        });
         // Xử lý sự kiện khi nhấp vào nút Save
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.setAvatar(avatarBytes);
                 user.setFullname(binding.txtFullnameProfile.getText().toString());
-                user.setBirthday(binding.txtBirthdayProfile.getText().toString());
+                user.setBirthday(binding.birthdayPickerText.getText().toString());
                 user.setGender(binding.txtGenderProfile.getText().toString());
                 user.setEmail(binding.txtEmailProfile.getText().toString());
                 user.setPhonenumber(binding.txtProfilePhoneNum.getText().toString());
@@ -91,6 +127,10 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        MaterialToolbar materialToolbar = findViewById(R.id.materialToolbar);
+        materialToolbar.setTitle("");
+        setSupportActionBar(materialToolbar);
     }
 
     @Override
@@ -122,5 +162,13 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
