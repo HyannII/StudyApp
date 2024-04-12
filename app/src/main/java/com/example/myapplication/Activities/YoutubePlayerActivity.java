@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Receiver.ConnectionReceiver;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -16,10 +17,15 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 public class YoutubePlayerActivity extends AppCompatActivity {
     private YouTubePlayer youTubePlayer;
 
+    private ConnectionReceiver connectionReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_player);
+
+        connectionReceiver = new ConnectionReceiver();
+
+        ConnectionReceiver.registerReceiver(this, connectionReceiver);
 
         String [] videoIds = getResources().getStringArray(R.array.video_id);
 
@@ -63,5 +69,11 @@ public class YoutubePlayerActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        ConnectionReceiver.unregisterReceiver(this, connectionReceiver);
     }
 }

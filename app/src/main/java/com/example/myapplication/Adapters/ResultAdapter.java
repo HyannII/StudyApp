@@ -19,13 +19,6 @@ import java.util.ArrayList;
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHolder> {
     Context context;
     ArrayList<ResultModel> results;
-
-
-    public void setFilteredList(ArrayList<ResultModel> filteredList){
-        this.results = filteredList;
-        notifyDataSetChanged();
-    }
-
     public ResultAdapter(Context context, ArrayList<ResultModel> results) {
         this.context = context;
         this.results = results;
@@ -51,6 +44,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     public int getItemCount() {
         return results.size();
     }
+
+    public ArrayList<ResultModel> getResults() {
+        return results;
+    }
+
+    public void setResults(ArrayList<ResultModel> results) {
+        this.results = results;
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView examineeName,startTime,correctNum,wrongNum,timeLeft;
         public MyViewHolder(@NonNull View itemView) {

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView introduction, readDocument,exercise, test, videoPlayer, profile;
     private TextView userName, userNameNav, emailNav;
     private ImageView avatar, avatarNav;
+    private NavigationView navigationView;
     DatabaseHelper databaseHelper;
     UserModel user;
     String savedUsername;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         videoPlayer = findViewById(R.id.videoBtn);
         profile = findViewById(R.id.btnProfile);
 
-        NavigationView navigationView = drawerLayout.findViewById(R.id.nav_view);
+        navigationView = drawerLayout.findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         Menu menu = navigationView.getMenu();
         MenuItem navLogoutItem = menu.findItem(R.id.nav_logout);
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if (navLogoutItem != null) {
             navLogoutItem.setOnMenuItemClickListener(item -> {
                 showLogoutConfirmationDialog();
-                return true;
+                return false;
             });
         }
         if (navProfileItem != null) {
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 drawerLayout.close();
-                return true;
+                return false;
             });
         }
         if (navTestResultsItem != null) {
@@ -119,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ResultListActivity.class);
                 startActivity(intent);
                 drawerLayout.close();
-                return true;
+                return false;
             });
         }
         if (navHome != null) {
             navHome.setOnMenuItemClickListener(item ->{
                 drawerLayout.close();
-                return true;
+                return false;
             });
         }
 
