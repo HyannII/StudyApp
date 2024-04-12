@@ -124,6 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
                 user.setPhonenumber(binding.txtProfilePhoneNum.getText().toString());
 
                 databaseHelper.updateUser(user);
+                setResult(RESULT_OK);
                 finish();
             }
         });

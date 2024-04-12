@@ -13,6 +13,7 @@ import com.example.myapplication.Models.ResultModel;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ResultListActivity extends AppCompatActivity {
     ArrayList<ResultModel> results = new ArrayList<>();
@@ -25,9 +26,14 @@ public class ResultListActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         results = databaseHelper.getAllResult();
 
+
         RecyclerView recyclerView = findViewById(R.id.resultList);
         ResultAdapter adapter = new ResultAdapter(this,results);
         recyclerView.setAdapter(adapter);
+
+//        results.sort(ResultModel.SortByOldest);
+//        adapter.notifyDataSetChanged();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

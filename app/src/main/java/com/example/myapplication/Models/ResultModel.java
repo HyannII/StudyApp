@@ -1,8 +1,10 @@
 package com.example.myapplication.Models;
 
+import java.util.Comparator;
+
 public class ResultModel {
-    String examinee, startTime, timeLeft;
-    int correct, wrong,id;
+    private String examinee, startTime, timeLeft;
+    private int correct, wrong,id;
     public ResultModel(int id,String examinee, String startTime, int correct, int wrong, String timeLeft) {
         this.id = id;
         this.examinee = examinee;
@@ -11,6 +13,31 @@ public class ResultModel {
         this.correct = correct;
         this.wrong = wrong;
     }
+
+    public static Comparator<ResultModel> SortByWrong = new Comparator<ResultModel>() {
+        @Override
+        public int compare(ResultModel r1, ResultModel r2) {
+            return r1.getCorrect() - r2.getCorrect();
+        }
+    };
+    public static Comparator<ResultModel> SortByCorrect  = new Comparator<ResultModel>() {
+        @Override
+        public int compare(ResultModel r1, ResultModel r2) {
+            return r1.getWrong() - r2.getWrong();
+        }
+    };
+    public static Comparator<ResultModel> SortByOldest = new Comparator<ResultModel>() {
+        @Override
+        public int compare(ResultModel r1, ResultModel r2) {
+            return r1.getId() - r2.getId();
+        }
+    };
+    public static Comparator<ResultModel> SortByNewest  = new Comparator<ResultModel>() {
+        @Override
+        public int compare(ResultModel r1, ResultModel r2) {
+            return r2.getId() - r1.getId();
+        }
+    };
 
     public String getExaminee() {
         return examinee;

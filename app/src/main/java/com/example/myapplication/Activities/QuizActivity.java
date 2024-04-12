@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -16,12 +18,15 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.myapplication.Database.DatabaseHelper;
 import com.example.myapplication.Models.QuestionModel;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityQuizBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -34,12 +39,16 @@ public class QuizActivity extends AppCompatActivity {
     private String timeLeftFormatted;
     CountDownTimer timer;
     ActivityQuizBinding binding;
+    DatabaseHelper databaseHelper;
+    String savedUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
 
-
+        databaseHelper = new DatabaseHelper(this);
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        savedUsername = prefs.getString("username", null);
 
         binding.btnNext.setEnabled(false);
         enableOption(true);
@@ -62,39 +71,39 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         for (int i=0;i<4;i++){
-            binding.optionContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    checkAnswer((Button) view);
-                    disableButton();
-                }
+            binding.optionContainer.getChildAt(i).setOnClickListener(view -> {
+                checkAnswer((Button) view);
+                disableButton();
             });
         }
 
         playAnimation(binding.question, 0, listQuestion.get(position).getQuestion());
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.btnNext.setOnClickListener(view -> {
 
-                binding.btnNext.setEnabled(false);
-                binding.btnNext.setAlpha((float) 0.3);
-                enableOption(true);
-                position++;
+            binding.btnNext.setEnabled(false);
+            binding.btnNext.setAlpha((float) 0.3);
+            enableOption(true);
+            position++;
 
-                if(position == listQuestion.size()){
-                    Intent intent = new Intent(QuizActivity.this,ScoreActivity.class);
-                    intent.putExtra("score",score);
-                    intent.putExtra("total",listQuestion.size());
-                    intent.putExtra("time",timeLeftFormatted);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
+            if(position == listQuestion.size()){
+                Date now = new Date();
 
-                count = 0;
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
+                String formattedTime = sdf.format(now);
+                databaseHelper.addResult(savedUsername,formattedTime,score,listQuestion.size()-score,timeLeftFormatted);
 
-                playAnimation(binding.question,0,listQuestion.get(position).getQuestion());
+                Intent intent = new Intent(QuizActivity.this,ScoreActivity.class);
+                intent.putExtra("score",score);
+                intent.putExtra("total",listQuestion.size());
+                intent.putExtra("time",timeLeftFormatted);
+                startActivity(intent);
+                finish();
+                return;
             }
+
+            count = 0;
+
+            playAnimation(binding.question,0,listQuestion.get(position).getQuestion());
         });
         setContentView(binding.getRoot());
 
@@ -124,6 +133,12 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 binding.timer.setText("00:00");
+                Date now = new Date();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
+                String formattedTime = sdf.format(now);
+                databaseHelper.addResult(savedUsername,formattedTime,score,listQuestion.size()-score,timeLeftFormatted);
+
                 Intent intent = new Intent(QuizActivity.this,ScoreActivity.class);
                 intent.putExtra("score",score);
                 intent.putExtra("total",listQuestion.size());

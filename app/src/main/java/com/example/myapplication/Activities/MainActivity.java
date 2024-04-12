@@ -1,5 +1,6 @@
 package com.example.myapplication.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -33,14 +34,15 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final int REQUEST_PROFILE_ACTIVITY = 1;
     private DrawerLayout drawerLayout;
     private ImageButton drawerToggle;
     private CardView introduction, readDocument,exercise, test, videoPlayer, profile;
     private TextView userName, userNameNav, emailNav;
     private ImageView avatar, avatarNav;
     DatabaseHelper databaseHelper;
-
+    UserModel user;
+    String savedUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
         avatarNav = headerView.findViewById(R.id.userImg);
 
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String savedUsername = prefs.getString("username", null);
+        savedUsername = prefs.getString("username", null);
 
-        UserModel user = databaseHelper.getUser(savedUsername);
+        user = databaseHelper.getUser(savedUsername);
         userName.setText(savedUsername);
         userNameNav.setText(savedUsername);
         emailNav.setText(user.getEmail());
@@ -151,12 +153,33 @@ public class MainActivity extends AppCompatActivity {
         });
         profile.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_PROFILE_ACTIVITY);
         });
 
     }
 
-//    boolean checkPermission(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQUEST_PROFILE_ACTIVITY){
+            user = databaseHelper.getUser(savedUsername);
+            userName.setText(savedUsername);
+            userNameNav.setText(savedUsername);
+            emailNav.setText(user.getEmail());
+            byte[] avatarBytes = user.getAvatar();
+            if (avatarBytes != null) {
+                InputStream inputStream = new ByteArrayInputStream(avatarBytes);
+                Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
+                avatar.setImageBitmap(avatarBitmap);
+                avatarNav.setImageBitmap(avatarBitmap);
+            }else{
+                avatar.setImageResource(R.drawable.account_person);
+                avatarNav.setImageResource(R.drawable.account_person);
+            }
+        }
+    }
+
+    //    boolean checkPermission(){
 //        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
 //            int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_MEDIA_AUDIO);
 //            if(result == PackageManager.PERMISSION_GRANTED){

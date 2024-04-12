@@ -30,15 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CORRECT_NUM = "correctNum";
     private static final String COLUMN_WRONG_NUM = "wrongNum";
     private static final String COLUMN_TIME_LEFT = "timeLeft";
-
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng UserProfile
         String createUserProfileTableQuery = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_USERNAME + " TEXT PRIMARY KEY," +
                 COLUMN_PASSWORD + " TEXT," +
@@ -50,7 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "avatar BLOB)";
         db.execSQL(createUserProfileTableQuery);
 
-        // Tạo bảng Result
         String createResultTableQuery = "CREATE TABLE " + TABLE_RESULT + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_EXAMINEE + " TEXT," +
@@ -88,10 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USERNAME + " = ?", new String[]{username});
         if (cursor != null) {
             cursor.moveToFirst();
-            // Đọc giá trị của cột `avatar` dưới dạng byte array
             byte[] avatarData = cursor.getBlob(cursor.getColumnIndexOrThrow("avatar"));
 
-            // Tạo đối tượng UserModel với dữ liệu đã đọc được
             UserModel user = new UserModel(
                     cursor.getString(0),
                     cursor.getString(1),
@@ -100,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(4),
                     cursor.getString(5),
                     cursor.getString(6),
-                    avatarData  // Truyền byte array của avatar
+                    avatarData
             );
             cursor.close();
             return user;
@@ -139,10 +133,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count > 0;
     }
     public long addResult(String examinee, String startTime, int correctNum, int wrongNum, String timeLeft) {
-        // Lấy cơ sở dữ liệu trong chế độ ghi
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Tạo đối tượng ContentValues để lưu các giá trị của các trường
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXAMINEE, examinee);
         values.put(COLUMN_START_TIME, startTime);
@@ -150,28 +142,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WRONG_NUM, wrongNum);
         values.put(COLUMN_TIME_LEFT, timeLeft);
 
-        // Chèn hàng vào bảng Result
-        // Hàm insert() trả về ID của hàng mới được chèn, hoặc -1 nếu chèn thất bại
         long resultId = db.insert(TABLE_RESULT, null, values);
 
-        // Đóng cơ sở dữ liệu
         db.close();
 
-        // Trả về ID của hàng mới được chèn
         return resultId;
     }
     public ArrayList<ResultModel> getAllResult() {
-        // Tạo danh sách để lưu trữ các đối tượng Result
         ArrayList<ResultModel> resultList = new ArrayList<>();
 
-        // Lấy cơ sở dữ liệu trong chế độ đọc
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Truy vấn tất cả các hàng trong bảng Result
         String query = "SELECT * FROM " + TABLE_RESULT;
         Cursor cursor = db.rawQuery(query, null);
 
-        // Lặp qua các kết quả truy vấn
         if (cursor.moveToFirst()) {
             do {
                 // Lấy dữ liệu của một hàng từ cursor
@@ -182,10 +166,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int wrongNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WRONG_NUM));
                 String timeLeft = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME_LEFT));
 
-                // Tạo đối tượng Result mới từ dữ liệu của hàng
                 ResultModel result = new ResultModel(id, examinee, startTime, correctNum, wrongNum, timeLeft);
 
-                // Thêm đối tượng Result vào danh sách
                 resultList.add(result);
             } while (cursor.moveToNext());
         }
@@ -194,6 +176,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return resultList;
+    }
+    public void deleteAllResult() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.delete("Result", null, null);
+        } finally {
+            db.close();
+        }
     }
 
 }

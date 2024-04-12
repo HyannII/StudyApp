@@ -1,6 +1,7 @@
 package com.example.myapplication.Adapters;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     public int getItemCount() {
         return results.size();
     }
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView examineeName,startTime,correctNum,wrongNum,timeLeft;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +56,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
             correctNum = itemView.findViewById(R.id.txtCorrectNum);
             wrongNum = itemView.findViewById(R.id.txtWrongNum);
             timeLeft = itemView.findViewById(R.id.txtTimeLeft);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
         }
     }
 }
