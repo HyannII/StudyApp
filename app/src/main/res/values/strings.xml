@@ -198,5 +198,10 @@
     </string-array>
 
     <string name="sign_up_text"> <![CDATA[Don\'t have an account? <u><font color="#0000FF">Sign up</font></u>]]> </string>
-
+    <string-array name="sort_option">
+        <item>Correct answer</item>
+        <item>Wrong answer</item>
+        <item>Newest</item>
+        <item>Oldest</item>
+    </string-array>
 </resources>

@@ -17,5 +17,8 @@
     <style name="NavigationViewTextStyle">
         <item name="android:textSize">30sp</item>
     </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">20sp</item>
+    </style>
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
 </resources>

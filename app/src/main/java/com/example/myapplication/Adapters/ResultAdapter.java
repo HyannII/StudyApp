@@ -20,11 +20,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     Context context;
     ArrayList<ResultModel> results;
 
+
+    public void setFilteredList(ArrayList<ResultModel> filteredList){
+        this.results = filteredList;
+        notifyDataSetChanged();
+    }
+
     public ResultAdapter(Context context, ArrayList<ResultModel> results) {
         this.context = context;
         this.results = results;
     }
-
     @NonNull
     @Override
     public ResultAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,7 +51,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     public int getItemCount() {
         return results.size();
     }
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView examineeName,startTime,correctNum,wrongNum,timeLeft;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,12 +61,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
             correctNum = itemView.findViewById(R.id.txtCorrectNum);
             wrongNum = itemView.findViewById(R.id.txtWrongNum);
             timeLeft = itemView.findViewById(R.id.txtTimeLeft);
-            itemView.setOnCreateContextMenuListener(this);
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
         }
     }
 }

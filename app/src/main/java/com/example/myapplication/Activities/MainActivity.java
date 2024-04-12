@@ -1,6 +1,7 @@
 package com.example.myapplication.Activities;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -101,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.setOnClickListener(v -> drawerLayout.open());
         if (navLogoutItem != null) {
             navLogoutItem.setOnMenuItemClickListener(item -> {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                showLogoutConfirmationDialog();
                 return true;
             });
         }
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             navProfileItem.setOnMenuItemClickListener(item -> {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
+                drawerLayout.close();
                 return true;
             });
         }
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             navTestResultsItem.setOnMenuItemClickListener(item -> {
                 Intent intent = new Intent(MainActivity.this, ResultListActivity.class);
                 startActivity(intent);
+                drawerLayout.close();
                 return true;
             });
         }
@@ -157,7 +159,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to log out?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Dismiss the dialog
+            dialog.dismiss();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
