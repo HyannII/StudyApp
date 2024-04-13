@@ -13,17 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.myapplication.Adapters.ResultAdapter;
 import com.example.myapplication.Database.DatabaseHelper;
-import com.example.myapplication.Models.CourseModel;
 import com.example.myapplication.Models.ResultModel;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ResultListActivity extends AppCompatActivity {
     ArrayList<ResultModel> results;

@@ -15,7 +15,6 @@ public class ReadDocumentActivity extends AppCompatActivity {
 
     PDFView pdfView;
     TextView chapterName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,20 +28,23 @@ public class ReadDocumentActivity extends AppCompatActivity {
         String content = getIntent().getStringExtra("content");
         String action = getIntent().getStringExtra("action");
 
-
-        if(action.equals("read")){
-            for (int i =0;i<8;i++){
-                if(position == i){
-                    pdfView.fromAsset("Chuong"+(i+1)+".pdf").load();
-                    chapterName.setText(name);
+        switch (action) {
+            case "read":
+                for (int i = 0; i < 8; i++) {
+                    if (position == i) {
+                        pdfView.fromAsset("Chuong" + (i + 1) + ".pdf").load();
+                        chapterName.setText(name);
+                    }
                 }
-            }
-        }else if (action.equals("exercise")){
-            pdfView.fromAsset(content + " exercise.pdf").load();
-            chapterName.setText(content);
-        }else if (action.equals("introduction")){
-            pdfView.fromAsset(content + ".pdf").load();
-            chapterName.setText(content);
+                break;
+            case "exercise":
+                pdfView.fromAsset(content + " exercise.pdf").load();
+                chapterName.setText(content);
+                break;
+            case "introduction":
+                pdfView.fromAsset(content + ".pdf").load();
+                chapterName.setText(content);
+                break;
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");

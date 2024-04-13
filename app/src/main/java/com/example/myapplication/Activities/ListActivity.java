@@ -10,17 +10,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.myapplication.Adapters.CourseAdapter;
-import com.example.myapplication.Models.CourseModel;
+import com.example.myapplication.Adapters.DocumentAdapter;
+import com.example.myapplication.Models.DocumentModel;
 import com.example.myapplication.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ListActivity extends AppCompatActivity {
 
-    ArrayList<CourseModel> cours = new ArrayList<>();
+    ArrayList<DocumentModel> cours = new ArrayList<>();
     TextView actionName;
 
     int [] images ={R.drawable.ly_thuyet, R.drawable.youtube, R.drawable.write, R.drawable.question};
@@ -39,7 +38,7 @@ public class ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String action = intent.getStringExtra("action");
         setCourse(action);
-        CourseAdapter adapter = new CourseAdapter(this, cours, action);
+        DocumentAdapter adapter = new DocumentAdapter(this, cours, action);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -52,23 +51,23 @@ public class ListActivity extends AppCompatActivity {
 
         if(action.equals("read")){
             for (int i = 0; i < chapters.length; i++) {
-                cours.add(new CourseModel(chapters[i], title[i], images[0]));
+                cours.add(new DocumentModel(chapters[i], title[i], images[0]));
             }
             actionName.setText("Material");
         }
         else if (action.equals("video")){
             for (int i = 0; i < chapters.length; i++) {
-                cours.add(new CourseModel(chapters[i], title[i], images[1]));
+                cours.add(new DocumentModel(chapters[i], title[i], images[1]));
             }
             actionName.setText("Video");
         }else if (action.equals("exercise")){
             for(int i = 0;i < exercises.length; i++){
-                cours.add(new CourseModel("Exercise "+(i+1),exercises[i],images[2]));
+                cours.add(new DocumentModel("Exercise "+(i+1),exercises[i],images[2]));
             }
             actionName.setText("Exercise");
         }else if (action.equals("introduction")){
             for(int i = 0;i < introductions.length; i++){
-                cours.add(new CourseModel("Introduction "+(i+1),introductions[i],images[3]));
+                cours.add(new DocumentModel("Introduction "+(i+1),introductions[i],images[3]));
             }
             actionName.setText("Introduction");
         }

@@ -1,13 +1,13 @@
 package com.example.myapplication.Models;
 
-public class CourseModel {
+public class DocumentModel {
     String Title;
 
     String TitleContent;
     int Image;
 
 
-    public CourseModel(String title, String titleContent, int image) {
+    public DocumentModel(String title, String titleContent, int image) {
         this.Title = title;
         this.TitleContent = titleContent;
         this.Image = image;
