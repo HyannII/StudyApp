@@ -3,17 +3,17 @@
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+<!--        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>-->
     </style>
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">24sp</item>
     </style>
-    <style name="ActivityAnim" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
-    </style>
+<!--    <style name="ActivityAnim" parent="@android:style/Animation.Activity">-->
+<!--        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>-->
+<!--        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>-->
+<!--        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>-->
+<!--        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>-->
+<!--    </style>-->
     <style name="NavigationViewTextStyle">
         <item name="android:textSize">30sp</item>
     </style>

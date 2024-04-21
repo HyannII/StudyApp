@@ -148,35 +148,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return resultId;
     }
-    public ArrayList<ResultModel> getAllResult() {
-        ArrayList<ResultModel> resultList = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String query = "SELECT * FROM " + TABLE_RESULT;
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                // Lấy dữ liệu của một hàng từ cursor
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
-                String examinee = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXAMINEE));
-                String startTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
-                int correctNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CORRECT_NUM));
-                int wrongNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WRONG_NUM));
-                String timeLeft = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME_LEFT));
-
-                ResultModel result = new ResultModel(id, examinee, startTime, correctNum, wrongNum, timeLeft);
-
-                resultList.add(result);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        return resultList;
-    }
+//    public ArrayList<ResultModel> getAllResult() {
+//        ArrayList<ResultModel> resultList = new ArrayList<>();
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String query = "SELECT * FROM " + TABLE_RESULT;
+//        Cursor cursor = db.rawQuery(query, null);
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                // Lấy dữ liệu của một hàng từ cursor
+//                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+//                String examinee = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXAMINEE));
+//                String startTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_TIME));
+//                int correctNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CORRECT_NUM));
+//                int wrongNum = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WRONG_NUM));
+//                String timeLeft = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME_LEFT));
+//
+//                ResultModel result = new ResultModel(id, examinee, startTime, correctNum, wrongNum, timeLeft);
+//
+//                resultList.add(result);
+//            } while (cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//
+//        return resultList;
+//    }
     public void deleteAllResult() {
         SQLiteDatabase db = this.getWritableDatabase();
         try {

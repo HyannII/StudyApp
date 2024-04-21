@@ -1,19 +1,29 @@
 package com.example.myapplication.Models;
 
+import com.google.firebase.Timestamp;
+
 import java.util.Comparator;
 
 public class ResultModel {
-    private String examinee, startTime, timeLeft;
-    private int correct, wrong,id;
-    public ResultModel(int id,String examinee, String startTime, int correct, int wrong, String timeLeft) {
-        this.id = id;
-        this.examinee = examinee;
-        this.startTime = startTime;
-        this.timeLeft = timeLeft;
-        this.correct = correct;
-        this.wrong = wrong;
+    private String userId;
+    private String userName;
+    private int correct;
+    private int wrong;
+    private Timestamp startTime;
+    private String timeLeft;
+
+    public ResultModel() {
+        // Constructor mặc định để sử dụng với Firebase Firestore
     }
 
+    public ResultModel(String userId, String userName, int correct, int wrong, Timestamp startTime, String timeLeft) {
+        this.userId = userId;
+        this.userName = userName;
+        this.correct = correct;
+        this.wrong = wrong;
+        this.startTime = startTime;
+        this.timeLeft = timeLeft;
+    }
     public static Comparator<ResultModel> SortByWrong = new Comparator<ResultModel>() {
         @Override
         public int compare(ResultModel r1, ResultModel r2) {
@@ -29,22 +39,30 @@ public class ResultModel {
     public static Comparator<ResultModel> SortByOldest = new Comparator<ResultModel>() {
         @Override
         public int compare(ResultModel r1, ResultModel r2) {
-            return r1.getId() - r2.getId();
+            return r1.getStartTime().compareTo(r2.getStartTime());
         }
     };
     public static Comparator<ResultModel> SortByNewest  = new Comparator<ResultModel>() {
         @Override
         public int compare(ResultModel r1, ResultModel r2) {
-            return r2.getId() - r1.getId();
+            return r2.getStartTime().compareTo(r1.getStartTime());
         }
     };
 
-    public String getExaminee() {
-        return examinee;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setExaminee(String examinee) {
-        this.examinee = examinee;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getCorrect() {
@@ -63,6 +81,14 @@ public class ResultModel {
         this.wrong = wrong;
     }
 
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
     public String getTimeLeft() {
         return timeLeft;
     }
@@ -70,19 +96,5 @@ public class ResultModel {
     public void setTimeLeft(String timeLeft) {
         this.timeLeft = timeLeft;
     }
-    public String getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,27 +32,41 @@ import com.example.myapplication.Database.DatabaseHelper;
 import com.example.myapplication.Models.UserModel;
 import com.example.myapplication.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUEST_PROFILE_ACTIVITY = 1;
+    public static final int REQUEST_PROFILE_ACTIVITY = 1001;
     private DrawerLayout drawerLayout;
     private ImageButton drawerToggle;
     private CardView introduction, readDocument,exercise, test, videoPlayer, profile;
     private TextView userName, userNameNav, emailNav;
     private ImageView avatar, avatarNav;
+    private ProgressBar progressBar;
     private NavigationView navigationView;
     DatabaseHelper databaseHelper;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fstore;
+    DocumentReference documentReference;
     UserModel user;
-    String savedUsername;
+    String savedUsername,userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new DatabaseHelper(this);
+//        databaseHelper = new DatabaseHelper(this);
+        fAuth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = findViewById(R.id.drawer_toggle);
@@ -61,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         test = findViewById(R.id.testBtn);
         videoPlayer = findViewById(R.id.videoBtn);
         profile = findViewById(R.id.btnProfile);
+        progressBar = findViewById(R.id.progressBar);
 
         navigationView = drawerLayout.findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -76,29 +93,31 @@ public class MainActivity extends AppCompatActivity {
         avatar = findViewById(R.id.userImg);
         avatarNav = headerView.findViewById(R.id.userImg);
 
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        savedUsername = prefs.getString("username", null);
-
-        user = databaseHelper.getUser(savedUsername);
-        userName.setText(savedUsername);
-        userNameNav.setText(savedUsername);
-        emailNav.setText(user.getEmail());
-
-        byte[] avatarBytes = user.getAvatar();
-        if (avatarBytes != null) {
-            InputStream inputStream = new ByteArrayInputStream(avatarBytes);
-            Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
-            avatar.setImageBitmap(avatarBitmap);
-            avatarNav.setImageBitmap(avatarBitmap);
-        }else{
-            avatar.setImageResource(R.drawable.account_person);
-            avatarNav.setImageResource(R.drawable.account_person);
-        }
-
-//        if(checkPermission() == false){
-//            requestPermission();
-//            return;
-//        }
+        documentReference = fstore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()) {
+                    userName.setText(value.getString("fname"));
+                    userNameNav.setText(value.getString("fname"));
+                    emailNav.setText(value.getString("email"));
+                    if(value.getString("img")!= null){
+                        Picasso.get().load(Uri.parse(value.getString("img"))).into(avatar, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressBar.setVisibility(View.GONE);
+                                Log.d("Picasso", "Image loaded successfully");
+                            }
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso", "Error loading image: " + e.getMessage());
+                            }
+                        });
+                        Picasso.get().load(Uri.parse(value.getString("img"))).into(avatarNav);
+                    }
+                }
+            }
+        });
         // Set click listener for drawer toggle button
         drawerToggle.setOnClickListener(v -> drawerLayout.open());
         if (navLogoutItem != null) {
@@ -164,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to log out?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
+            fAuth.signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -179,52 +199,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == REQUEST_PROFILE_ACTIVITY){
-            user = databaseHelper.getUser(savedUsername);
-            userName.setText(savedUsername);
-            userNameNav.setText(savedUsername);
-            emailNav.setText(user.getEmail());
-            byte[] avatarBytes = user.getAvatar();
-            if (avatarBytes != null) {
-                InputStream inputStream = new ByteArrayInputStream(avatarBytes);
-                Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
-                avatar.setImageBitmap(avatarBitmap);
-                avatarNav.setImageBitmap(avatarBitmap);
-            }else{
-                avatar.setImageResource(R.drawable.account_person);
-                avatarNav.setImageResource(R.drawable.account_person);
-            }
+            progressBar.setVisibility(View.VISIBLE);
+            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    userName.setText(value.getString("fname"));
+                    userNameNav.setText(value.getString("fname"));
+                    emailNav.setText(value.getString("email"));
+                    if(value.getString("img")!= null){
+                        Picasso.get().load(Uri.parse(value.getString("img"))).into(avatar, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressBar.setVisibility(View.GONE);
+                                Log.d("Picasso", "Image loaded successfully");
+                            }
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso", "Error loading image: " + e.getMessage());
+                            }
+                        });
+                        Picasso.get().load(Uri.parse(value.getString("img"))).into(avatarNav);
+                    }
+                }
+            });
         }
     }
-
-    //    boolean checkPermission(){
-//        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_MEDIA_AUDIO);
-//            if(result == PackageManager.PERMISSION_GRANTED){
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        }else{
-//            int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//            if(result == PackageManager.PERMISSION_GRANTED){
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        }
-//    }
-//
-//    void requestPermission(){
-//        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.READ_MEDIA_AUDIO)){
-//                Toast.makeText(MainActivity.this,"READ PERMISSION IS REQUIRED,PLEASE ALLOW FROM SETTTINGS",Toast.LENGTH_SHORT).show();
-//            }else
-//                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_MEDIA_AUDIO},123);
-//        }else{
-//            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-//                Toast.makeText(MainActivity.this,"READ PERMISSION IS REQUIRED,PLEASE ALLOW FROM SETTTINGS",Toast.LENGTH_SHORT).show();
-//            }else
-//                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},123);
-//        }
-//    }
 }

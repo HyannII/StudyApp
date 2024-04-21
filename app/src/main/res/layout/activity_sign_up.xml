@@ -6,26 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Activities.SignUpActivity">
 
-    <TextView
-        android:id="@+id/errorRetypePW"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="#ff0000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtConfirmPass"
-        app:layout_constraintTop_toBottomOf="@+id/txtConfirmPass" />
-
-    <TextView
-        android:id="@+id/errorPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="#ff0000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
@@ -70,11 +50,30 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@drawable/abc"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:textColorHint="#3B608C"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+
+    <EditText
         android:id="@+id/txtPassword"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_background"
         android:drawableStart="@drawable/lock"
@@ -87,40 +86,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
-    <Button
-        android:id="@+id/btnSignUp"
+    <TextView
+        android:id="@+id/errorRetypePW"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Sign up"
-        android:backgroundTint="#ced2ff"
-        android:elevation="12dp"
-        android:textSize="16sp"
-        android:textColor="#3B608C"
-        app:layout_constraintEnd_toEndOf="@+id/txtConfirmPass"
+        android:layout_marginTop="4dp"
+        android:text=""
+        android:textColor="#ff0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtConfirmPass"
         app:layout_constraintTop_toBottomOf="@+id/txtConfirmPass" />
 
-    <EditText
-        android:id="@+id/txtConfirmPass"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/edittext_background"
-        android:drawableStart="@drawable/lock"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="Re-enter Password"
-        android:inputType="textPassword"
-        android:textColorHint="#3B608C"
-        android:textSize="18sp"
+    <TextView
+        android:id="@+id/txtSwitchToLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Log in"
+        android:textColor="#6672ff"
+
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintHorizontal_bias="0.738"
+        app:layout_constraintStart_toStartOf="@+id/btnSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,18 +128,51 @@
     </TextView>
 
     <TextView
-        android:id="@+id/txtSwitchToLogIn"
-        android:layout_width="wrap_content"
+        android:id="@+id/errorPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Log in"
-        android:textColor="#6672ff"
-
-        android:textSize="16sp"
+        android:layout_marginTop="4dp"
+        android:text=""
+        android:textColor="#ff0000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.738"
-        app:layout_constraintStart_toStartOf="@+id/btnSignUp"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
+    <EditText
+        android:id="@+id/txtConfirmPass"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@drawable/lock"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Re-enter Password"
+        android:inputType="textPassword"
+        android:textColorHint="#3B608C"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#ced2ff"
+        android:elevation="12dp"
+        android:text="Sign up"
+        android:textColor="#3B608C"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtConfirmPass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtConfirmPass"
+        app:layout_constraintTop_toBottomOf="@+id/txtConfirmPass" />
 
     <TextView
         android:id="@+id/errorUsername"

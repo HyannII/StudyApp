@@ -11,6 +11,15 @@ public class QuestionModel {
         this.option4 = option4;
         this.correctAnswer = correctAnswer;
     }
+    @Override
+    public String toString() {
+        return "Question: " + question + "\n" +
+                "Answer A: " + option1 + "\n" +
+                "Answer B: " + option2 + "\n" +
+                "Answer C: " + option3 + "\n" +
+                "Answer D: " + option4 + "\n" +
+                "Correct Answer: " + correctAnswer;
+    }
 
     public QuestionModel(){
     }

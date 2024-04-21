@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.myapplication.FirebaseStorageUtils;
 import com.example.myapplication.R;
 import com.example.myapplication.Receiver.ConnectionReceiver;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -17,6 +18,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 public class YoutubePlayerActivity extends AppCompatActivity {
     private YouTubePlayer youTubePlayer;
 
+    String videoId;
     private ConnectionReceiver connectionReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,29 +29,41 @@ public class YoutubePlayerActivity extends AppCompatActivity {
 
         ConnectionReceiver.registerReceiver(this, connectionReceiver);
 
-        String [] videoIds = getResources().getStringArray(R.array.video_id);
-
-        int position = getIntent().getIntExtra("position", 0);
+        String uri = getIntent().getStringExtra("uri");
         String chapter = getIntent().getStringExtra("name");
 
 
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtubePlayer);
         TextView videoName = findViewById(R.id.videoChapterName);
 
-        videoName.setText(String.format("Video %s", chapter));
+        videoName.setText(String.format(chapter));
 
         getLifecycle().addObserver(youTubePlayerView);
+        FirebaseStorageUtils.downloadStringFromUrl(uri, new FirebaseStorageUtils.StringDownloadListener() {
+            @Override
+            public void onSuccess(String result) {
+                System.out.println("Downloaded string: " + result);
+                videoId = result;
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Xử lý lỗi khi tải dữ liệu
+                e.printStackTrace();
+            }
+        });
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer player) {
                 super.onReady(player);
                 youTubePlayer = player;
-                for (int i =0;i<8;i++){
-                    if(position == i){
-                        loadNewVideo(videoIds[i]);
-                    }
-                }
+                loadNewVideo(videoId);
+//                for (int i =0;i<8;i++){
+//                    if(position == i){
+//                        loadNewVideo(videoIds[i]);
+//                    }
+//                }
 
             }
         });

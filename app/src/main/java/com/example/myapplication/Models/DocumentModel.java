@@ -1,15 +1,16 @@
 package com.example.myapplication.Models;
 
 public class DocumentModel {
-    String Title;
+    private String Title;
 
-    String TitleContent;
+    private String TitleContent;
+    private String DocumentUri;
     int Image;
 
-
-    public DocumentModel(String title, String titleContent, int image) {
+    public DocumentModel(String title, String titleContent,String documentUri, int image) {
         this.Title = title;
         this.TitleContent = titleContent;
+        this.DocumentUri = documentUri;
         this.Image = image;
     }
 
@@ -33,6 +34,13 @@ public class DocumentModel {
         return TitleContent;
     }
 
+    public String getDocumentUri() {
+        return DocumentUri;
+    }
+
+    public void setDocumentUri(String documentUri) {
+        DocumentUri = documentUri;
+    }
     public void setTitleContent(String titleContent) {
         TitleContent = titleContent;
     }

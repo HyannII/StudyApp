@@ -4,12 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.github.barteksc.pdfviewer.PDFView;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ReadDocumentActivity extends AppCompatActivity {
 
@@ -23,32 +31,37 @@ public class ReadDocumentActivity extends AppCompatActivity {
         pdfView = findViewById(R.id.pdfView);
         chapterName = findViewById(R.id.chapterName);
 
-        int position = getIntent().getIntExtra("position", 0);
         String name = getIntent().getStringExtra("name");
+        String uri = getIntent().getStringExtra("uri");
         String content = getIntent().getStringExtra("content");
         String action = getIntent().getStringExtra("action");
-
-        switch (action) {
-            case "read":
-                for (int i = 0; i < 8; i++) {
-                    if (position == i) {
-                        pdfView.fromAsset("Chuong" + (i + 1) + ".pdf").load();
-                        chapterName.setText(name);
-                    }
-                }
-                break;
-            case "exercise":
-                pdfView.fromAsset(content + " exercise.pdf").load();
-                chapterName.setText(content);
-                break;
-            case "introduction":
-                pdfView.fromAsset(content + ".pdf").load();
-                chapterName.setText(content);
-                break;
-        }
+        new RetrievePDFfromURL().execute(uri);
+        chapterName.setText(name);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+    }
+    class RetrievePDFfromURL extends AsyncTask<String, Void, InputStream>{
+        @Override
+        protected InputStream doInBackground(String... strings) {
+            InputStream inputStream = null;
+            try{
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                if(urlConnection.getResponseCode() == 200){
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+            return inputStream;
+        }
+
+        @Override
+        protected void onPostExecute(InputStream inputStream) {
+            pdfView.fromStream(inputStream).load();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

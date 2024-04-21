@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Activities.ReadDocumentActivity;
+import com.example.myapplication.Activities.YoutubePlayerActivity;
 import com.example.myapplication.Models.DocumentModel;
 import com.example.myapplication.R;
 
@@ -44,37 +45,24 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.MyView
         holder.imageView.setImageResource(documents.get(position).getImage());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ReadDocumentActivity.class);
-            switch (action) {
-                case "read": {
-                    intent.putExtra("name", documentModel.getTitle());
-                    intent.putExtra("position", position);
-                    intent.putExtra("action", "read");
-                    context.startActivity(intent);
-                    break;
-                }
-                case "video": {
-                    intent.putExtra("name", documentModel.getTitle());
-                    intent.putExtra("position", position);
-                    context.startActivity(intent);
-                    break;
-                }
-                case "exercise": {
-                    intent.putExtra("name", documentModel.getTitle());
-                    intent.putExtra("content", documentModel.getTitleContent());
-                    intent.putExtra("position", position);
-                    intent.putExtra("action", "exercise");
-                    context.startActivity(intent);
-                    break;
-                }
-                case "introduction": {
-                    intent.putExtra("name", documentModel.getTitle());
-                    intent.putExtra("content", documentModel.getTitleContent());
-                    intent.putExtra("position", position);
-                    intent.putExtra("action", "introduction");
-                    context.startActivity(intent);
-                    break;
-                }
+            if (action.equals("video")) {
+                Intent intent = new Intent(context, YoutubePlayerActivity.class);
+                intent.putExtra("name", documentModel.getTitle());
+                intent.putExtra("uri",documentModel.getDocumentUri());
+                intent.putExtra("position", position);
+                context.startActivity(intent);
+//                case "video": {
+//                    intent = new Intent(context, YoutubePlayerActivity.class);
+//                    intent.putExtra("name", documentModel.getTitle());
+//                    intent.putExtra("position", position);
+//                    context.startActivity(intent);
+//                    break;
+//                }
+            }else{
+                Intent intent = new Intent(context, ReadDocumentActivity.class);
+                intent.putExtra("name", documentModel.getTitle());
+                intent.putExtra("uri", documentModel.getDocumentUri());
+                context.startActivity(intent);
             }
         });
     }
