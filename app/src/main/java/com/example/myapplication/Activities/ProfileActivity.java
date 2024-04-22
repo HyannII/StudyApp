@@ -31,6 +31,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -72,6 +73,18 @@ public class ProfileActivity extends AppCompatActivity {
                 imageURI = uri.toString();
 //                Picasso.get().load(uri).into(binding.profileImg);
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof StorageException && ((StorageException) e).getErrorCode() == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                    // Tệp không tồn tại, thực hiện các hành động xử lý khi tệp không tồn tại ở đây
+                    // Ví dụ: Hiển thị một hình ảnh mặc định hoặc thông báo người dùng rằng hình ảnh không tồn tại
+                    Log.e("Firebase Storage", "File not found: " + e.getMessage());
+                } else {
+                    // Xử lý các loại lỗi khác nếu cần
+                    Log.e("Firebase Storage", "Error: " + e.getMessage());
+                }
+            }
         });
 
         documentReference = fstore.collection("users").document(userId);
@@ -99,18 +112,11 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.e("Picasso", "Error loading image: " + e.getMessage());
                         }
                     });
-                }
+                }else
+                    binding.profileImg.setImageResource(R.drawable.account_person);
             }
         });
 
-        if (avatarBytes != null) {
-            InputStream inputStream = new ByteArrayInputStream(avatarBytes);
-            Bitmap avatarBitmap = BitmapFactory.decodeStream(inputStream);
-            binding.profileImg.setImageBitmap(avatarBitmap);
-        } else {
-            binding.profileImg.setImageResource(R.drawable.account_person);
-            Toast.makeText(ProfileActivity.this, "No image", Toast.LENGTH_SHORT).show();
-        }
 
         binding.profileImg.setOnClickListener(v -> {
             Intent iGallery = new Intent(Intent.ACTION_PICK);

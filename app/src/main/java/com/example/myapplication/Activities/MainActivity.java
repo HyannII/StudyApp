@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         Picasso.get().load(Uri.parse(value.getString("img"))).into(avatarNav);
+                    }else {
+                        progressBar.setVisibility(View.GONE);
+                        avatar.setImageResource(R.drawable.account_person);
+                        avatarNav.setImageResource(R.drawable.account_person);
                     }
                 }
             }
@@ -219,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         Picasso.get().load(Uri.parse(value.getString("img"))).into(avatarNav);
+                    }else {
+                        avatar.setImageResource(R.drawable.account_person);
+                        avatarNav.setImageResource(R.drawable.account_person);
                     }
                 }
             });
