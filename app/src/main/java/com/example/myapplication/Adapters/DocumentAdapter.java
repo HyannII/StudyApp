@@ -51,13 +51,6 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.MyView
                 intent.putExtra("uri",documentModel.getDocumentUri());
                 intent.putExtra("position", position);
                 context.startActivity(intent);
-//                case "video": {
-//                    intent = new Intent(context, YoutubePlayerActivity.class);
-//                    intent.putExtra("name", documentModel.getTitle());
-//                    intent.putExtra("position", position);
-//                    context.startActivity(intent);
-//                    break;
-//                }
             }else{
                 Intent intent = new Intent(context, ReadDocumentActivity.class);
                 intent.putExtra("name", documentModel.getTitle());
